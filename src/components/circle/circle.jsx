@@ -29,6 +29,8 @@ function Circles({ width, height, year, colorScale, selectedContinent, data }) {
   // this just attaches circles to the DOM - it doesn't actually set their size, color, or position
   return (
     <svg ref={svgRef} viewBox={`0 0 ${width} ${height}`}>
+      <line stroke="lightgray" strokeDasharray={"10 2"} className="life-avg" />
+      <line stroke="lightgray" strokeDasharray={"10 2"} className="gdp-avg" />
       {chartData.map((d, i) => (
         <circle key={i} fill="#fff" />
       ))}

@@ -5,6 +5,7 @@ import {
   extent,
   axisBottom,
   axisLeft,
+  mean,
 } from "d3";
 
 export function drawChart(
@@ -31,6 +32,29 @@ export function drawChart(
     .domain(extent(data, (d) => d.population))
     .range([1, maxRadius]);
 
+  SVG.select(".life-avg")
+    .attr("x1", margin.left)
+    .attr("x2", width - margin.right)
+    .attr(
+      "y1",
+      mean(chartData, (d) => yScale(d.life_exp))
+    )
+    .attr(
+      "y2",
+      mean(chartData, (d) => yScale(d.life_exp))
+    );
+
+  SVG.select(".gdp-avg")
+    .attr(
+      "x1",
+      mean(chartData, (d) => xScale(d.gdp_cap))
+    )
+    .attr(
+      "x2",
+      mean(chartData, (d) => xScale(d.gdp_cap))
+    )
+    .attr("y1", margin.top)
+    .attr("y2", height - margin.bottom);
   SVG.selectAll("circle")
     .data(chartData)
     .transition()
