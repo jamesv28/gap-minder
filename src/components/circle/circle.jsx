@@ -27,7 +27,29 @@ function Circles({ width, height, year, colorScale, selectedContinent, data }) {
     );
   }, [chartData, height, width, colorScale, selectedContinent, data]);
   // this just attaches circles to the DOM - it doesn't actually set their size, color, or position
-  return <svg ref={svgRef} viewBox={`0 0 ${width} ${height}`}></svg>;
+  return (
+    <svg ref={svgRef} viewBox={`0 0 ${width} ${height}`}>
+      {chartData.map((d, i) => (
+        <circle key={i} fill="#fff" />
+      ))}
+      <text
+        fontSize="48px"
+        x={width - margin.right - 150}
+        y={height - margin.bottom - 50}
+      >
+        {year}
+      </text>
+      <text fill="gray" y={height - 20} x={20}>
+        GDP per Capita
+      </text>
+      <text
+        fill="gray"
+        transform={`translate(${20}, ${margin.top + 100}) rotate(-90)`}
+      >
+        Life Expectancy
+      </text>
+    </svg>
+  );
 }
 
 Circles.propTypes = {
@@ -38,4 +60,5 @@ Circles.propTypes = {
   colorScale: PropTypes.func,
   selectedContinent: PropTypes.string,
 };
+
 export default Circles;
