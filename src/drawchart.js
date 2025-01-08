@@ -32,6 +32,9 @@ export function drawChart(
     .domain(extent(data, (d) => d.population))
     .range([1, maxRadius]);
 
+  let colorPoint = (continent) => {
+    return selectedContinent == continent || selectedContinent == "all";
+  };
   SVG.select(".life-avg")
     .attr("x1", margin.left)
     .attr("x2", width - margin.right)
@@ -62,8 +65,10 @@ export function drawChart(
     .attr("cx", (d) => xScale(d.gdp_cap))
     .attr("cy", (d) => yScale(d.life_exp))
     .attr("r", (d) => rScale(d.population))
-    .attr("opacity", 1)
-    .style("fill", (d) => colorScale(d.continent));
+    .attr("opacity", (d) => (colorPoint(d.continent) ? 1 : 0.5))
+    .style("fill", (d) =>
+      colorPoint(d.continent) ? colorScale(d.continent) : "lightgray"
+    );
 
   SVG.append("g")
     .call(axisLeft(yScale).ticks(5))
